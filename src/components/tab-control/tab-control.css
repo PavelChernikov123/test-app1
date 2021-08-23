@@ -1,0 +1,5 @@
+.tab li {border:0px;}
+
+.active {background-color: blue; color:white;}
+
+.active a{ color:white;}
