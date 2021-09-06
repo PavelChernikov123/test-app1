@@ -1,85 +1,95 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import DataService from '../../services/data-service';
-import AppHeader from '../header';
-import TabControl from '../tab-control';
-import Grid from '../grid';
+import React, { Component }               from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import AppHeader                          from '../header'
+import TabControl                         from '../tab-control'
+import Grid                               from '../grid'
+import { connect }                        from 'react-redux'
+import { withDataService }                from '../hoc'
+import { fetchData, onMove }              from '../../actions'
+import './app.css'
 
 
-import './app.css';
 
-
-export default class App extends Component {
-    dataService = new DataService();
-    
-    state = this.dataService.getData();
-
+ class App extends Component {
+  componentDidMount() {
+    this.props.fetchData()
+  }
     onMove = (id, key, direction) => {
-        let currentItem;
+      const idx = this.keys().findIndex(item => item === key)
+      const to = this.keys()[idx+direction]
+      this.props.onMove({ ids : [id], from:key, to}) 
+    }
 
-        this.setState((state) => {
-            const idx = state[key].findIndex((item) => item.id === id);
-            currentItem = state[key][idx];
-
-            const items = [
-              ...state[key].slice(0, idx),
-              ...state[key].slice(idx + 1)
-            ];
-
-            const destination = this.keys[this.keys.findIndex((item) => item === key) + direction];
-            
-            return { [`${key}`] : items , [`${destination}`]: [...state[destination], currentItem]};
-          });    
-    };
+    onMoveGroup = (ids, key, direction) => {
+      const idx = this.keys().findIndex(item => item === key)
+      const to = this.keys()[idx+direction]
+      this.props.onMove({ids, from:key, to})     
+  }
     
     
-    keys = Object.keys(this.state);
+    keys = () => (Object.keys(this.props.data) || [])
     
     render() {
-        
-        const elements = this.keys.map((key, index) => {
-            const first = index === 0;
-            const last = index === this.keys.length -1;
+        const data = this.props.data
+        if(!data || data.length ===0) return <div>Loadig...</div>;
+
+        const elements = this.keys().map((key, index) => {
+            const first = index === 0
+            const last = index === this.keys().length -1
 
             return (
                 
                 <Grid 
                     onMove={this.onMove}
-                    items= {this.state[key]}
+                    onMoveGroup = {this.onMoveGroup}
+                    items= {data[key]}
                     key={key}
                     keyName = {key}
                     first = {first}
                     last = {last}/>
-            );
-          });
+            )
+          })
 
-          const routes = this.keys.map((key, index) => {
-                const first = index === 0;
-                const last = index === this.keys.length -1;
+          const routes = this.keys().map((key, index) => {
+                const first = index === 0
+                const last = index === this.keys().length -1
                 
-                return <Route path={`/${key}`} key={key} render={() => <Grid 
+                return <Route path={`/${key}`} exact key={key} render={() => <Grid 
                     onMove={this.onMove}
-                    items= {this.state[key]}
+                    onMoveGroup={this.onMoveGroup}
+                    items= {data[key]}
                     key={key}
                     keyName = {key}
                     first = {first}
                     last = {last}/>} />
 
-          });
+          })
 
-
+        
         return  (
         <div>
          <AppHeader/>
           <div className="row">{elements}</div>  
           <Router>
             <div>
-                <TabControl data={this.keys}></TabControl>
+                <TabControl data={this.keys()}></TabControl>
                 <div className="row">{routes}</div>
             </div> 
           </Router>
         </div>
-        );
+        )
           
-      };
+      }
 }
+
+const mapStateToProps = ({...props}) => ({...props})
+const mapDispatchtoProps = (dispatch, { dataService }) =>  (
+    {
+        fetchData: fetchData(dataService, dispatch),
+        onMove: props => dispatch(onMove(props))
+    }
+)
+
+export default withDataService()(
+  connect(mapStateToProps, mapDispatchtoProps)(App)
+  )

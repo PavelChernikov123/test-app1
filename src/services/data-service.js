@@ -1,33 +1,35 @@
 export default class DataService {
 
-getData () {
-    return {
-        Left: [
-            {id: 0, title: 'Left 0'},
-            {id: 1, title: 'Left 1'},
-            {id: 2, title: 'Left 2'},
-        ],
-        Middle: [
-            {id: 3, title: 'Middle 0'},
-            {id: 4, title: 'Middle 1'},
-            {id: 5, title: 'Middle 2'},
-        ],
-        
-        Right: [
-            {id: 6, title: 'Right 0'},
-            {id: 7, title: 'Right 1'},
-            {id: 8, title: 'Right 2'},
-        ],
-        aaa: [
-            {id: 13, title: 'a 10'},
-            {id: 14, title: 'a 11'},
-            {id: 15, title: 'a 12'},
-        ]
-    };
-};
+    async getData() {
+        const res = await fetch('http://localhost:3000/data')
+        return await res.json()
+    }
 
-moveItem() {
-
-};
-   
+    getDataTest(){
+        return{
+            data:{
+                Left: [
+                    {id: 0, title: 'Left 0'},
+                    {id: 1, title: 'Left 1'},
+                    {id: 2, title: 'Left 2'},
+                ],
+                Middle: [
+                    {id: 3, title: 'Middle 0'},
+                    {id: 4, title: 'Middle 1'},
+                    {id: 5, title: 'Middle 2'},
+                ],
+                
+                Right: [
+                    {id: 6, title: 'Right 0'},
+                    {id: 7, title: 'Right 1'},
+                    {id: 8, title: 'Right 2'},
+                ],
+                aaa: [
+                    {id: 13, title: 'a 10'},
+                    {id: 14, title: 'a 11'},
+                    {id: 15, title: 'a 12'},
+                ]
+        }
+        };
+    }
 }

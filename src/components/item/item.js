@@ -1,23 +1,26 @@
 import React from 'react';
 import './item.css';
-const Item = ({ title, onMoveLeft, onMoveRight, first, last }) => {
+const Item = ({ id, title, onMoveLeft, onMoveRight, first, last, onCheck, Checked }) => {
   
-  const left = first ? 'invisible' :'';
-  const right = last ? 'invisible' :'';
+  const left = first ? null :
+  (<button  type="button" onClick={onMoveLeft}>
+    <i className="fa fa-angle-left"></i>
+  </button>);
+
+  const right = last ? null :
+  (<button  type="button" onClick={onMoveRight}>
+    <i className="fa fa-angle-right"></i>
+  </button>);
 
   return (
     <div className="row">
-      <div className="col-md-8">
+      <div className="col-md-1"><input type="checkbox" value={id} checked={Checked} onChange={onCheck}/></div>
+      <div className="col-md-6">
         <span>{title}</span>
       </div>
       <div className="col-md-4">
-        <button className={left} type="button" onClick={onMoveLeft}>
-          <i className="fa fa-angle-left"></i>
-        </button>
-
-        <button className={right} type="button" onClick={onMoveRight}>
-          <i className="fa fa-angle-right"></i>
-        </button>
+        {left}
+        {right}
       </div>
     </div>
   );
