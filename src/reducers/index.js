@@ -4,10 +4,9 @@ const initialState = {
     data: []    
 }
     
-  
 const onMove = (state, payload) => {
-    const {ids, from, to } = payload
-    const {data} = state
+    const { ids, from, to } = payload
+    const { data } = state
     let updated = data;
     ids.map((id) => {
       const idx = updated[from].findIndex((item) => item.id === id)
@@ -23,7 +22,7 @@ const onMove = (state, payload) => {
       return true
     })
 
-    return {data : updated};
+    return { data : updated }
 }
 
   
@@ -43,12 +42,12 @@ const onMove = (state, payload) => {
             return {
                 state
             }
-      case actionType.MOVE_ITEM:
-        return  onMove(state, action.payload)
-      
-      default:
-        return state;
+        case actionType.MOVE_ITEM:
+            return  onMove(state, action.payload)
+        
+        default:
+            return state;
     }
-  };
+  }
   
-  export default reducer;
+  export default reducer

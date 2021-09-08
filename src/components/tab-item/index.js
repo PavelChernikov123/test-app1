@@ -1,2 +1,2 @@
-import TabItem from "./tab-item";
-export default TabItem;
+import TabItem from "./tab-item"
+export default TabItem

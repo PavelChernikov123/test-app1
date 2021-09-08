@@ -1,4 +1,4 @@
-import { DataServiceConsumer } from "../../services/data-service-context";
+import { DataServiceConsumer } from "../../services/data-service-context"
 
 const withDataService = () => Wrapped => props =>
     <DataServiceConsumer>

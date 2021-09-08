@@ -9,7 +9,7 @@ import store                    from './dataStore'
 const dataService = new DataService()
 ReactDom.render(
     <Provider store={ store }>
-        <DataServiceProvider value={dataService}>
+        <DataServiceProvider value={ dataService }>
             <App />
         </DataServiceProvider>
     </Provider>,    

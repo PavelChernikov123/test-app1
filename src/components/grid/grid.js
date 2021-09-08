@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
-import Item               from '../item/item';
-import './grid.css';
+import React, {Component} from 'react'
+import Item               from '../item/item'
+import './grid.css'
 
 const onMoveLeftDefault = () => {}
 const onMoveRightDefault = () => {}
 
 export default class Grid extends Component {
     
- setDefaultState () {
-   return {
+ setDefaultState =  () => (
+   {
     checkedItems : [],
     checkAll : false
-  }   
-}
+  })
 
 static defaultProps = {
   onMoveLeft: onMoveLeftDefault,
@@ -21,40 +20,37 @@ static defaultProps = {
 
 state = this.setDefaultState()
 
-onCheckAll = (e) => {
+onCheckAll = e => {
   const checked = e.target.checked;
-  checked ?  this.setState((state) => { 
-                return {
+  checked ?  this.setState((state) => (
+               {
                   checkAll:checked,
                   checkedItems:[...this.props.items.map((item)=> (item.id))]
                 }
-             }) 
+             )) 
           :
-             this.setState((state) => { 
-                return {
+             this.setState((state) => (
+                 {
                   checkAll:checked,
                   checkedItems:[]
                 }
-            })
-          
+             ))
 }
 
-onCheck = (e) => {
+onCheck = e => {
   const checked = e.target.checked;
-  const id = e.target.value *1;
+  const id = e.target.value * 1;
 
-  if(checked===true)
-    this.setState((state) => {
-
-      return {
+  if(checked === true)
+    this.setState((state) => (
+      {
         checkedItems:[...state.checkedItems, id],
         checkAll: state.checkedItems.length +1 === this.props.items.length 
       }
-    }) 
+    )) 
   else{
     this.setState((state) => {
       const idx = state.checkedItems.findIndex((item) => item === id)
-
       return {
         checkedItems:[
         ...state.checkedItems.slice(0, idx),
@@ -68,9 +64,7 @@ onCheck = (e) => {
 
 
 render() {
-  
-  
-  const { items, keyName , onMoveLeft, onMoveRight}= this.props; 
+  const { items, keyName , onMoveLeft, onMoveRight } = this.props; 
   
   const onMoveRightGroup = () => {
     onMoveRight(this.state.checkedItems)
@@ -84,37 +78,38 @@ render() {
 
   const getMoveFunc = () => {
     return  {
-      onMoveLeft:  onMoveLeft === onMoveLeftDefault ? undefined : onMoveLeft,
+      onMoveLeft:  onMoveLeft  === onMoveLeftDefault  ? undefined : onMoveLeft,
       onMoveRight: onMoveRight === onMoveRightDefault ? undefined : onMoveRight
     }
   }
 
   const elements = items.map((item) => {
-      const { id, ...itemProps } = item;
       
-      const checked = this.state.checkAll || this.state.checkedItems.indexOf(id) >-1
-      return (
-          <div key={id} className="list-group-item">
-            <Item
-              { ...itemProps }
-              {... getMoveFunc()}
-              id={id}
-              onCheck={this.onCheck}
-              Checked = {checked}
-              />
-          </div>
-      );
-  });
+    const { id, ...itemProps } = item;
+    const checked = this.state.checkAll || this.state.checkedItems.indexOf(id) >-1
+      
+    return (
+        <div key={id} className="list-group-item">
+          <Item
+            { ...itemProps }
+            { ...getMoveFunc() }
+            id      = { id }
+            onCheck = { this.onCheck }
+            Checked = { checked }
+            />
+        </div>
+    )
+  })
 
   const left = onMoveLeft === onMoveLeftDefault ? null :
-  (<button  type="button" onClick={onMoveLeftGroup}>
-    <i className="fa fa-angle-left"></i>
-  </button>);
+    (<button  type="button" onClick={ onMoveLeftGroup }>
+      <i className="fa fa-angle-left"></i>
+    </button>)
 
   const right = onMoveRight === onMoveRightDefault ? null :
-  (<button  type="button" onClick={onMoveRightGroup}>
-    <i className="fa fa-angle-right"></i>
-  </button>);
+    (<button  type="button" onClick={ onMoveRightGroup }>
+      <i className="fa fa-angle-right"></i>
+    </button>)
 
   const indeterminate = this.state.checkedItems.length !== items.length 
                         && this.state.checkedItems.length !== 0;
@@ -124,12 +119,12 @@ render() {
     <div className="row title ">
         <div className="col-md-1">
           <input type= "checkbox" 
-            id="checkall"
-            checked={this.state.checkAll} 
-            onChange={this.onCheckAll} 
-            indeterminate={this.state.indeterminate}
-            ref={el => el && (el.indeterminate = indeterminate)}
-            />
+            id            = "checkall"
+            checked       = { this.state.checkAll }  
+            onChange      = { this.onCheckAll } 
+            indeterminate = { this.state.indeterminate }
+            ref           = { el => el && (el.indeterminate = indeterminate) }
+          />
         </div>
         <div className="col-md-6">Name</div>
         <div className="col-md-4">

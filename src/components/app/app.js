@@ -14,66 +14,64 @@ import { fetchData, onMove }      from '../../actions'
 import './app.css'
 
  class App extends Component {
-  componentDidMount() {
-    this.props.fetchData()
-  }
-  
-  getMoveFunc = (key) => {
-    const keys = this.keys()
-    const idx = keys.findIndex(item => item === key)
-    const isLeft = idx === 0
-    const isRight = idx === keys.length - 1
-    return  {
-      onMoveLeft:  isLeft   ? undefined : ids => this.props.onMove({from:key, to:keys[idx-1], ids}),
-      onMoveRight: isRight  ? undefined : ids => this.props.onMove({from:key, to:keys[idx+1], ids})
+    componentDidMount() {
+      this.props.fetchData()
     }
-  }
     
-    keys = () => (Object.keys(this.props.data) || [])
+    getMoveFunc = key => {
+      const keys    = this.keys()
+      const idx     = keys.findIndex(item => item === key)
+      const isLeft  = idx === 0
+      const isRight = idx === keys.length - 1
+      return  {
+        onMoveLeft:  isLeft   ? undefined : ids => this.props.onMove( { from : key, to : keys[idx-1], ids } ),
+        onMoveRight: isRight  ? undefined : ids => this.props.onMove( { from : key, to : keys[idx+1], ids } )
+      }
+    }
+    
+    keys = () => ( Object.keys(this.props.data) || [] )
     
     render() {
         const data = this.props.data
-        if(!data || data.length ===0) return <div>Loadig...</div>;
+        if( !data || data.length === 0 ) return <div>Loadig...</div>;
         
         const widgets = this.keys().map((key, index) => {
-            return ( 
-              <Grid 
-                  {... this.getMoveFunc(key)}
-                  items= {data[key]}
-                  key={key}
-                  keyName = {key}
-                  />
-            )
-          })
+                return ( 
+                  <Grid 
+                      {... this.getMoveFunc(key) }
+                      items   = { data[key] }
+                      key     = { key }
+                      keyName = { key }
+                    />
+                )
+              })
      
         return  (
         <div>
          <AppHeader/>
-          <div className="row">{widgets}</div>  
+          <div className="row"> { widgets } </div>  
           <Router>
             <Switch>
-                <Route path="/:name" render={({ match: { params: { name } } }) =>
+                <Route path="/:name" render={ ({ match: { params: { name } } } ) =>
                     <div>
-                        <TabControl data={this.keys()} name = {name}></TabControl>
+                        <TabControl data={ this.keys() } name = { name }></TabControl>
                         <Grid 
-                          
-                          {... this.getMoveFunc(name)}
-                          items= {data[name]}
-                            key={name}
-                            keyName = {name}
+                            {... this.getMoveFunc(name)}
+                            items   = { data[ name ] }
+                            key     = { name }
+                            keyName = { name }
                         />
                     </div>
-                }/>
-                <Redirect to={`/${this.keys()[0]}`} />
+                  }/>
+                <Redirect to ={ `/${this.keys()[0]}` } />
             </Switch> 
           </Router>
         </div>
-        )
-          
+        )  
       }
 }
 
-const mapStateToProps = ({...props}) => ({...props})
+const mapStateToProps = ( { ...props } ) => ( { ...props } )
 const mapDispatchtoProps = (dispatch, { dataService }) =>  (
     {
         fetchData: fetchData(dataService, dispatch),
