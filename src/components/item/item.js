@@ -1,13 +1,17 @@
 import React from 'react';
 import './item.css';
-const Item = ({ id, title, onMoveLeft, onMoveRight, first, last, onCheck, Checked }) => {
+
+const onMoveLeftDefault = null
+const onMoveRightDefault = null
+
+const Item = ({ id, title, onMoveLeft, onMoveRight, onCheck, Checked }) => {
   
-  const left = first ? null :
+  const left = onMoveLeft === onMoveLeftDefault ? null :
   (<button  type="button" onClick={onMoveLeft}>
     <i className="fa fa-angle-left"></i>
   </button>);
 
-  const right = last ? null :
+  const right = onMoveRight === onMoveRightDefault ? null :
   (<button  type="button" onClick={onMoveRight}>
     <i className="fa fa-angle-right"></i>
   </button>);

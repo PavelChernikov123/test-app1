@@ -3,6 +3,9 @@ import React, {Component} from 'react';
 import Item from '../item/item';
 import './grid.css';
 
+const onMoveLeftDefault = null
+const onMoveRightDefault = null
+
 export default class Grid extends Component {
     
  setDefaultState () {
@@ -10,6 +13,11 @@ export default class Grid extends Component {
     checkedItems : [],
     checkAll : false
   }   
+}
+
+static defaultProps = {
+  onMoveLeft: onMoveLeftDefault,
+  onMoveRight: onMoveRightDefault
 }
 
 state = this.setDefaultState()
@@ -66,31 +74,28 @@ onCheck = (e) => {
 render() {
   
   
-  const { items, keyName , onMove, onMoveGroup, first, last }= this.props; 
+  const { items, keyName , onMoveLeft, onMoveRight}= this.props; 
   
   const onMoveRightGroup = () => {
-    onMoveGroup(this.state.checkedItems, keyName, 1)
+    onMoveRight(this.state.checkedItems)
     this.setState(() => (this.setDefaultState()) )
   }
 
   const onMoveLeftGroup = () => {
-    onMoveGroup(this.state.checkedItems, keyName, -1)
+    onMoveLeft(this.state.checkedItems)
     this.setState(() => (this.setDefaultState()) )
   }
 
   const elements = items.map((item) => {
       const { id, ...itemProps } = item;
-      const onMoveLeft = () => {onMove(id, keyName, -1)};
-      const onMoveRight = () => {onMove(id, keyName, 1)};
+      
       const checked = this.state.checkAll || this.state.checkedItems.indexOf(id) >-1
       return (
           <div key={id} className="list-group-item">
             <Item
               { ...itemProps }
-              onMoveLeft={ onMoveLeft  }
-              onMoveRight={ onMoveRight }
-              first={first}
-              last = {last}
+              onMoveLeft={onMoveLeft === onMoveLeftDefault ? null : () => onMoveLeft([id]) }
+              onMoveRight={ onMoveRight === onMoveRightDefault ? null :() => onMoveRight([id]) }
               id={id}
               onCheck={this.onCheck}
               Checked = {checked}
@@ -99,12 +104,12 @@ render() {
       );
   });
 
-  const left = first ? null :
+  const left = onMoveLeft === onMoveLeftDefault ? null :
   (<button  type="button" onClick={onMoveLeftGroup}>
     <i className="fa fa-angle-left"></i>
   </button>);
 
-  const right = last ? null :
+  const right = onMoveRight === onMoveRightDefault ? null :
   (<button  type="button" onClick={onMoveRightGroup}>
     <i className="fa fa-angle-right"></i>
   </button>);
