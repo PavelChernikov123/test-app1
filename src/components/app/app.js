@@ -33,12 +33,12 @@ import './app.css'
     
     render() {
         const data = this.props.data
-        if( !data || data.length === 0 ) return <div>Loadig...</div>;
+        if(!data || data.length === 0) return <div>Loadig...</div>;
         
         const widgets = this.keys().map((key, index) => {
                 return ( 
                   <Grid 
-                      {... this.getMoveFunc(key) }
+                      { ...this.getMoveFunc(key) }
                       items   = { data[key] }
                       key     = { key }
                       keyName = { key }
@@ -49,15 +49,15 @@ import './app.css'
         return  (
         <div>
          <AppHeader/>
-          <div className="row"> { widgets } </div>  
+          <div className="row">{ widgets }</div>  
           <Router>
             <Switch>
                 <Route path="/:name" render={ ({ match: { params: { name } } } ) =>
                     <div>
-                        <TabControl data={ this.keys() } name = { name }></TabControl>
+                        <TabControl data={ this.keys() } name={ name }></TabControl>
                         <Grid 
-                            {... this.getMoveFunc(name)}
-                            items   = { data[ name ] }
+                            { ...this.getMoveFunc(name) }
+                            items   = { data[name] }
                             key     = { name }
                             keyName = { name }
                         />
@@ -71,7 +71,7 @@ import './app.css'
       }
 }
 
-const mapStateToProps = ( { ...props } ) => ( { ...props } )
+const mapStateToProps = ( {...props } ) => ( {...props } )
 const mapDispatchtoProps = (dispatch, { dataService }) =>  (
     {
         fetchData: fetchData(dataService, dispatch),

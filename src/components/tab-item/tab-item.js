@@ -6,10 +6,10 @@ const TabItem = ({ name, onClick, active }) => {
     if(active)  classNames += ' active'
 
     return (
-        <li className = { classNames } key = { name } >
+        <li className ={ classNames } key ={ name } >
             <Link 
-                to = { `/${name}` } 
-                onClick = { onClick } > 
+                    to      = { `/${name}` } 
+                    onClick = { onClick } > 
                 { name } 
             </Link>
         </li>

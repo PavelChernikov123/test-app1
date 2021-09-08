@@ -17,7 +17,7 @@ class TabControl extends Component  {
             />
         )
       })
-    return <div><ul className="tab d-flex"> { links } </ul></div>
+    return <div><ul className="tab d-flex">{ links }</ul></div>
   }
 }
 

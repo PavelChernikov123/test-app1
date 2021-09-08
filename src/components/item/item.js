@@ -38,7 +38,7 @@ class Item extends Component {
             onChange = { onCheck }/>
         </div>
         <div className="col-md-6">
-          <span> { title } </span>
+          <span>{ title }</span>
         </div>
         <div className="col-md-4">
           { left }

@@ -9,8 +9,8 @@ export default class Grid extends Component {
     
  setDefaultState =  () => (
    {
-    checkedItems : [],
-    checkAll : false
+    checkedItems: [],
+    checkAll: false
   })
 
 static defaultProps = {
@@ -24,27 +24,27 @@ onCheckAll = e => {
   const checked = e.target.checked;
   checked ?  this.setState((state) => (
                {
-                  checkAll:checked,
-                  checkedItems:[...this.props.items.map((item)=> (item.id))]
+                  checkAll: checked,
+                  checkedItems: [...this.props.items.map((item)=> (item.id))]
                 }
              )) 
           :
              this.setState((state) => (
                  {
-                  checkAll:checked,
-                  checkedItems:[]
+                  checkAll: checked,
+                  checkedItems: []
                 }
              ))
 }
 
 onCheck = e => {
   const checked = e.target.checked;
-  const id = e.target.value * 1;
+  const id      = e.target.value * 1;
 
   if(checked === true)
     this.setState((state) => (
       {
-        checkedItems:[...state.checkedItems, id],
+        checkedItems: [...state.checkedItems, id],
         checkAll: state.checkedItems.length +1 === this.props.items.length 
       }
     )) 
@@ -52,7 +52,7 @@ onCheck = e => {
     this.setState((state) => {
       const idx = state.checkedItems.findIndex((item) => item === id)
       return {
-        checkedItems:[
+        checkedItems: [
         ...state.checkedItems.slice(0, idx),
         ...state.checkedItems.slice(idx + 1)
       ],
@@ -86,7 +86,7 @@ render() {
   const elements = items.map((item) => {
       
     const { id, ...itemProps } = item;
-    const checked = this.state.checkAll || this.state.checkedItems.indexOf(id) >-1
+    const checked = this.state.checkAll || this.state.checkedItems.indexOf(id) > -1
       
     return (
         <div key={id} className="list-group-item">
@@ -115,7 +115,7 @@ render() {
                         && this.state.checkedItems.length !== 0;
   return (
   <div className="col-md-3">
-    <div className="row title"><b>{keyName} Page</b></div>
+    <div className="row title"><b>{ keyName } Page</b></div>
     <div className="row title ">
         <div className="col-md-1">
           <input type= "checkbox" 
