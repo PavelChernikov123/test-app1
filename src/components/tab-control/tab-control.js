@@ -9,7 +9,7 @@ class TabControl extends Component  {
   render ()  {
     const links = this.props.data.map((key) => {
         return (
-            <TabItem name={key} key={key} onClick={ () =>  this.onClick(key) } active = {this.state.active === key}></TabItem>
+            <TabItem name={key} key={key} onClick={ () => this.onClick(key) } active = {this.state.active === key}></TabItem>
         )
       })
     return <div><ul className="tab d-flex">{links}</ul></div>

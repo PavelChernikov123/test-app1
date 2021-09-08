@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import './item.css';
 
-const onMoveLeftDefault  = null
-const onMoveRightDefault = null
+const onMoveLeftDefault  = () => {}
+const onMoveRightDefault = () => {}
 
 class Item extends Component {
   static defaultProps = {
@@ -13,13 +13,13 @@ class Item extends Component {
   render() {
     const { id, title, onMoveLeft, onMoveRight, onCheck, Checked } = this.props
 
-    const left = onMoveLeft == onMoveLeftDefault ? null :
-    (<button  type="button" onClick={onMoveLeft}>
+    const left = onMoveLeft === onMoveLeftDefault ? null :
+    (<button  type="button" onClick={ () => onMoveLeft([id]) }>
       <i className="fa fa-angle-left"></i>
     </button>);
 
     const right = onMoveRight === onMoveRightDefault ? null :
-    (<button  type="button" onClick={onMoveRight}>
+    (<button  type="button" onClick={ () => onMoveRight([id]) }>
       <i className="fa fa-angle-right"></i>
     </button>);
 

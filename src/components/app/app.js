@@ -24,8 +24,8 @@ import './app.css'
     const isLeft = idx === 0
     const isRight = idx === keys.length - 1
     return  {
-      onMoveLeft:  isLeft   ? null : ids => this.props.onMove({from:key, to:keys[idx-1], ids}),
-      onMoveRight: isRight  ? null : ids => this.props.onMove({from:key, to:keys[idx+1], ids})
+      onMoveLeft:  isLeft   ? undefined : ids => this.props.onMove({from:key, to:keys[idx-1], ids}),
+      onMoveRight: isRight  ? undefined : ids => this.props.onMove({from:key, to:keys[idx+1], ids})
     }
   }
     
@@ -38,8 +38,7 @@ import './app.css'
         const widgets = this.keys().map((key, index) => {
             return ( 
               <Grid 
-                  onMoveLeft={ this.getMoveFunc(key).onMoveLeft}
-                  onMoveRight = {this.getMoveFunc(key).onMoveRight}
+                  {... this.getMoveFunc(key)}
                   items= {data[key]}
                   key={key}
                   keyName = {key}
@@ -57,8 +56,8 @@ import './app.css'
                     <div>
                         <TabControl data={this.keys()} name = {name}></TabControl>
                         <Grid 
-                          onMoveLeft={this.getMoveFunc(name).onMoveLeft}
-                          onMoveRight = {this.getMoveFunc(name).onMoveRight}
+                          
+                          {... this.getMoveFunc(name)}
                           items= {data[name]}
                             key={name}
                             keyName = {name}

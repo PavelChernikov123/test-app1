@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Item               from '../item/item';
 import './grid.css';
 
-const onMoveLeftDefault = null
-const onMoveRightDefault = null
+const onMoveLeftDefault = () => {}
+const onMoveRightDefault = () => {}
 
 export default class Grid extends Component {
     
@@ -82,6 +82,13 @@ render() {
     this.setState(() => (this.setDefaultState()) )
   }
 
+  const getMoveFunc = () => {
+    return  {
+      onMoveLeft:  onMoveLeft === onMoveLeftDefault ? undefined : onMoveLeft,
+      onMoveRight: onMoveRight === onMoveRightDefault ? undefined : onMoveRight
+    }
+  }
+
   const elements = items.map((item) => {
       const { id, ...itemProps } = item;
       
@@ -90,8 +97,7 @@ render() {
           <div key={id} className="list-group-item">
             <Item
               { ...itemProps }
-              onMoveLeft={onMoveLeft === onMoveLeftDefault ? null : () => onMoveLeft([id]) }
-              onMoveRight={ onMoveRight === onMoveRightDefault ? null :() => onMoveRight([id]) }
+              {... getMoveFunc()}
               id={id}
               onCheck={this.onCheck}
               Checked = {checked}
