@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './item.css';
 
-const onMoveLeftDefault = null
+const onMoveLeftDefault  = null
 const onMoveRightDefault = null
 
 class Item extends Component {
@@ -13,7 +13,7 @@ class Item extends Component {
   render() {
     const { id, title, onMoveLeft, onMoveRight, onCheck, Checked } = this.props
 
-    const left = onMoveLeft === onMoveLeftDefault ? null :
+    const left = onMoveLeft == onMoveLeftDefault ? null :
     (<button  type="button" onClick={onMoveLeft}>
       <i className="fa fa-angle-left"></i>
     </button>);

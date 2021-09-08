@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-
-import Item from '../item/item';
+import Item               from '../item/item';
 import './grid.css';
 
 const onMoveLeftDefault = null
@@ -24,23 +23,20 @@ state = this.setDefaultState()
 
 onCheckAll = (e) => {
   const checked = e.target.checked;
-  if(checked)
-    this.setState((state) => { 
-      return {
-        checkAll:checked,
-        checkedItems:[...this.props.items.map((item)=> (item.id))]
-      }
-    
-    }) 
-    else
-    {
-      this.setState((state) => { 
-        return {
-          checkAll:checked,
-          checkedItems:[]
-        }
-    })
-  }
+  checked ?  this.setState((state) => { 
+                return {
+                  checkAll:checked,
+                  checkedItems:[...this.props.items.map((item)=> (item.id))]
+                }
+             }) 
+          :
+             this.setState((state) => { 
+                return {
+                  checkAll:checked,
+                  checkedItems:[]
+                }
+            })
+          
 }
 
 onCheck = (e) => {
