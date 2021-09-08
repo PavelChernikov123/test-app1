@@ -1,25 +1,27 @@
+import actionType from "./action-type" 
+
 const dataLoaded = (data) => {
     return {
-        type: 'FETCH_DATA_SUCCESS',
+        type:    actionType.FETCH_DATA_SUCCESS,
         payload: data
     }
 }
 
 const dataRequested = () => {
     return {
-        type: 'FETCH_DATA'
+        type: actionType.FETCH_DATA
     }
 }
 
 const dataError = () => {
     return {
-        type: 'FETCH_DATA_ERROR'
+        type: actionType.FETCH_DATA_ERROR
     }
 }
 
 const onMove = props => {
     return {
-        type: 'MOVE_ITEM',
+        type: actionType.MOVE_ITEM,
         payload: props
     }
 }

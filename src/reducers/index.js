@@ -1,3 +1,5 @@
+import actionType from "../actions/action-type"
+
 const initialState = {
     data: []    
 }
@@ -15,8 +17,8 @@ const onMove = (state, payload) => {
             [from] :[
             ...updated[from].slice(0, idx),
             ...updated[from].slice(idx + 1)
-          ] , 
-          [to]: [...updated[to], currentItem]
+            ] , 
+            [to]: [...updated[to], currentItem]
       }
       return true
     })
@@ -29,19 +31,19 @@ const onMove = (state, payload) => {
   const reducer = (state = initialState, action) => {
   
     switch (action.type) {
-        case 'FETCH_DATA':
+        case actionType.FETCH_DATA:
             return {
                 state
             }
-        case 'FETCH_DATA_SUCCESS':
+        case actionType.FETCH_DATA_SUCCESS:
             return {
                 data: action.payload,
             }
-        case 'FETCH_DATA_ERROR':
+        case actionType.FETCH_DATA_ERROR:
             return {
                 state
             }
-      case 'MOVE_ITEM':
+      case actionType.MOVE_ITEM:
         return  onMove(state, action.payload)
       
       default:

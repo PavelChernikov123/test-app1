@@ -36,19 +36,17 @@ import './app.css'
         if(!data || data.length ===0) return <div>Loadig...</div>;
         
         const widgets = this.keys().map((key, index) => {
-            return (
-                
-                <Grid 
-                    onMoveLeft={ this.getMoveFunc(key).onMoveLeft}
-                    onMoveRight = {this.getMoveFunc(key).onMoveRight}
-                    items= {data[key]}
-                    key={key}
-                    keyName = {key}
-                    />
+            return ( 
+              <Grid 
+                  onMoveLeft={ this.getMoveFunc(key).onMoveLeft}
+                  onMoveRight = {this.getMoveFunc(key).onMoveRight}
+                  items= {data[key]}
+                  key={key}
+                  keyName = {key}
+                  />
             )
           })
-
-                  
+     
         return  (
         <div>
          <AppHeader/>
@@ -57,7 +55,7 @@ import './app.css'
             <Switch>
                 <Route path="/:name" render={({ match: { params: { name } } }) =>
                     <div>
-                        <TabControl data={this.keys()}></TabControl>
+                        <TabControl data={this.keys()} name = {name}></TabControl>
                         <Grid 
                           onMoveLeft={this.getMoveFunc(name).onMoveLeft}
                           onMoveRight = {this.getMoveFunc(name).onMoveRight}

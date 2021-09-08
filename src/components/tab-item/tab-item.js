@@ -1,14 +1,13 @@
 import React    from 'react'
 import { Link } from 'react-router-dom'
 
-const TabItem = ({name, onClick}) => {
-    
+const TabItem = ({name, onClick, active}) => {
     let classNames = 'list-group-item'
-    if(document.URL.indexOf(name)> -1 )  classNames += ' active'
+    if(active)  classNames += ' active'
 
     return (
         <li className={classNames} key={name} >
-            <Link to={`/${name}`} key={name} onClick={onClick}> {name} </Link>
+            <Link to={`/${name}`} onClick={onClick}> {name} </Link>
         </li>
     )
 }
